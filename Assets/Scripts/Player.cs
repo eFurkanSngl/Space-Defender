@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
+
 
 public class Player : MainCamera
 {
@@ -13,11 +15,16 @@ public class Player : MainCamera
     public float fireRate = 0.5f;   // Ateş hızı
     private float nextFireTime = 0f;
     public float bounceFactor = 0.5f; // geri sekme faktörü.
-
+    public Enemies Enemies;
+    
+    public float spawnInvterval = 1f;
+    // private int _spawnEnemy = 100;
     
     // Start is called before the first frame update
     void Start()
     {
+        Enemies.SpawnEnemies();
+        // StartCoroutine(SpawnEnemiesCoroutine());
         CalculateScreenBoundaries();
         _rb = gameObject.GetComponent<Rigidbody2D>();  // GameObjenin direkt rigidtboydsine erişiyr
     }
@@ -47,7 +54,22 @@ public class Player : MainCamera
         //     OnMouseDown();
         // }
         // // MouseSolClick Basılı tutunca fire calışacak
+        
+       
     }
+
+    // IEnumerator SpawnEnemiesCoroutine()
+    // {
+    //    
+    //     while (_spawnEnemy > 0)
+    //     {
+    //         SpawnEnemies();
+    //         _spawnEnemy--;
+    //         yield return new WaitForSeconds(spawnInvterval);
+    //     }
+    //
+    // }
+   
 
     private void MoveShip()
     {
