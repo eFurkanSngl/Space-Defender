@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    public float speed = 10f;   // gitme hızı
+    public float speed = 7f;   // gitme hızı
     // Update is called once per frame
     void Update()
     { 

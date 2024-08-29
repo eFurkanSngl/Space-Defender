@@ -15,20 +15,34 @@ public class Player : MainCamera
     public float fireRate = 0.5f;   // Ateş hızı
     private float nextFireTime = 0f;
     public float bounceFactor = 0.5f; // geri sekme faktörü.
-    public Enemies Enemies;
     
-    public float spawnInvterval = 1f;
+    public Enemies _spawnEnemies;
+    public float spawnWidth = 8.50f;
+    public float spawnInterval = 0.09f;
+    
     // private int _spawnEnemy = 100;
     
     // Start is called before the first frame update
     void Start()
     {
-        Enemies.SpawnEnemies();
+        InvokeRepeating("SpawnEnemies",0f,spawnInterval);
         // StartCoroutine(SpawnEnemiesCoroutine());
         CalculateScreenBoundaries();
         _rb = gameObject.GetComponent<Rigidbody2D>();  // GameObjenin direkt rigidtboydsine erişiyr
     }
+    
+    public void SpawnEnemies()
+    {
+        for (int i = 0; i < Random.Range(0,3); i++)
+        {
+            float randomX = Random.Range(-spawnWidth / 0.9f, spawnWidth / 0.9f);
+            Vector2 pos = new Vector2(randomX, y: 4.15f);
+            Instantiate(_spawnEnemies,pos,Quaternion.identity);
+        }
+        
+    }
 
+    
     // Update is called once per frame
     void Update()
     {
@@ -43,12 +57,15 @@ public class Player : MainCamera
         // // GetAxisRaw  -1 0 1 olarak döndürür ( -1 sola 0 sabit 1 sağa hareket etmektir.)
         // // GetAxisRaw tam sayı değerleri verir -1 0 1  GetAxsis daha yumuşak dönüler -1 1 arasında verir 
         //
+        
         // if (_inputHorizantal != 0)
         // {
         //     _rb.AddForce(new Vector2(_inputHorizantal * _walkSpeed ,0f)); // burada Rigidbody e özellik güç veriyoruz.
         //     //2 boyutlu o yüzden vector2 inputHorizantal gideceği yönü veriyor hareket hızı veriyoruz.
         // }
         //
+        
+        
         // if (Input.GetMouseButtonDown(0)) //0 sol tık
         // {
         //     OnMouseDown();
@@ -86,6 +103,7 @@ public class Player : MainCamera
         {
             newPos.x = minX;
             bounced = true;
+            // eğer pozisyonum MinXten küçükse onu tanımlıyorum.
         }
         else if (newPos.x > maxX)
         {
@@ -112,8 +130,9 @@ public class Player : MainCamera
         // NextFireTime bir sonraki ateş zamanı.
         {
             nextFireTime = Time.time + fireRate;  // burada sıradaki ateşi güncelliyor
-            Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+           GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             // burada Yaratacağımız prefab yaratacılağı konum ve başlangıc rotasyonunu veridk.
+            bullet.tag = "Bullet";
         }
             // Ateşi burada yarattık.
     }
