@@ -8,7 +8,7 @@ public class Enemies : MonoBehaviour
 {
     [SerializeField] private GameObject _spawnEnemies;
     public float spawnInterval = 0.09f;
-    
+    private int _scoreValue = 10;  // her düşman değeri.
     
 
     // private void OnCollisionEnter2D(Collision2D other)
@@ -39,7 +39,7 @@ public class Enemies : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
-            
+            PlayerScore.Instance.IncreaseScore(_scoreValue);
             Destroy(other.gameObject);
             Destroy(gameObject);
         }
