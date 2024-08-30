@@ -126,7 +126,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d69ee46eb2f8af469b4eccbd275f709, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnEnemies: {fileID: 2781856281169131919}
+  padding: 1
+  minX: 0
+  minY: 0
+  maxX: 0
+  maxY: 0
+  _rb: {fileID: 0}
+  _walkSpeed: 2
+  bulletPrefab: {fileID: 0}
+  firePoint: {fileID: 0}
+  fireRate: 0.5
+  bounceFactor: 0.5
+  _spawnEnemies: {fileID: 4455882058892187469}
+  spawnWidth: 8.5
+  spawnInterval: 3
   spawnInterval: 3
 --- !u!61 &8492613404881124996
 BoxCollider2D:

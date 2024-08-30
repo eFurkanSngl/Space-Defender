@@ -7,6 +7,8 @@ using Random = UnityEngine.Random;
 
 public class Player : MainCamera
 {
+    public static Player Instance;
+
     public Rigidbody2D _rb;
     public float _walkSpeed = 2f;
     private float _inputHorizantal;  // Yatay şekilde kontrol edeceğiz girdiyi
@@ -20,19 +22,34 @@ public class Player : MainCamera
     public float spawnWidth = 8.50f;
     public float spawnInterval = 0.09f;
     
-    // private int _spawnEnemy = 100;
-    
+
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance=this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         InvokeRepeating("SpawnEnemies",0f,spawnInterval);
+        
         // StartCoroutine(SpawnEnemiesCoroutine());
+        
         CalculateScreenBoundaries();
+        
         _rb = gameObject.GetComponent<Rigidbody2D>();  // GameObjenin direkt rigidtboydsine erişiyr
     }
     
-    public void SpawnEnemies()
-    {
+    public void SpawnEnemies()  // Düşman yaratma methodu
+    { 
         for (int i = 0; i < Random.Range(0,3); i++)
         {
             float randomX = Random.Range(-spawnWidth / 0.9f, spawnWidth / 0.9f);
@@ -40,6 +57,14 @@ public class Player : MainCamera
             Instantiate(_spawnEnemies,pos,Quaternion.identity);
         }
         
+    }
+    
+    public void isGameOver()
+    {
+        if (PlayerScore.Instance.live == 0)
+        {
+            Debug.Log("GameOver");
+        }
     }
 
     
@@ -137,3 +162,5 @@ public class Player : MainCamera
             // Ateşi burada yarattık.
     }
 }
+
+
